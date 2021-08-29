@@ -62,10 +62,8 @@ pipeline{
 		stage('Create Branch & Push Branch') {
             steps {
                 script {
-					// withCredentials([usernamePassword(credentialsId: 'GitHub', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                    //     sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/SonyMC/jenkins-azure-devops-microservice-2.git HEAD:master')
 					 withCredentials([usernamePassword(credentialsId: 'GitHub', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                         sh('git push https://${GIT_PASSWORD}@github.com/SonyMC/jenkins-azure-devops-microservice-2.git HEAD:master')
+                         sh('git push https://${GIT_PASSWORD}@https://github.com/SonyMC/jenkins-azure-devops-kubernetes-terraform-pipeline-2.git HEAD:master')
                     }
                 }
             }
@@ -73,15 +71,15 @@ pipeline{
 // 		stage("Build Docker Image"){
 // 			steps{
 // 				script{
-// 					//dockerImage = "docker build -t mailsonymathew/jenkins-currency-exchange-devops:$env.BUILD_TAG"
-// 					 //dockerImage = docker.build("mailsonymathew/jenkins-currency-exchange-devops:${env.BUILD_TAG}")
+// 					//dockerImage = "docker build -t mailsonymathew/currency-exchange-devops:$env.BUILD_TAG"
+// 					 //dockerImage = docker.build("mailsonymathew/currency-exchange-devops:${env.BUILD_TAG}")
 // 					dockerImage = docker.build  dockerRegistry + ":${env.BUILD_TAG}"
 // 				}
 // 			}
 // 		}
 // 		stage("Push Docker Image"){
 // 			steps{
-// 				// "docker push mailsonymathew/jenkins-currency-exchange-devops:$env.BUILD_TAG"  -> This is an old method of doing this
+// 				// "docker push mailsonymathew/mailsonymathew/currency-exchange-devops:$env.BUILD_TAG"  -> This is an old method of doing this
 // 				script{
 // // 					docker.withRegistry('','dockerHub'){  // add a wrapper providing docker credentails . dockerHub is the name of the Docker credentails we have provided in the Jenkins UI -> Manage Jenkins -> Maanage Credentials 
 // // 						dockerImage.push();
