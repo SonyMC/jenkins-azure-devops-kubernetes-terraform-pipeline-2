@@ -1,0 +1,59 @@
+# Demonstrating Pipeline variables, copy files and publishing artefacts and running on multiple OS( aka agents)
+
+trigger:
+- master
+
+
+
+# Default pool
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+  - stage: Build
+    jobs:
+      - job: FirstJob
+    # Optional: Specifying more than 1 OS to run the job  
+        strategy:
+          matrix:
+            linux:
+              operatingSystem: 'ubuntu-latest'
+            mac:
+              operatingSystem: 'macos-latest'
+
+        pool:
+          vmImage: $(operatingSystem)
+
+        steps:
+          - bash: echo Build FirstJob
+          # We defined the value of the 'PipelineLevelVariable' using the 'Variables' button in the top right hand corner
+          # Variables following PipelineVariable are pre-defined variables.
+          - bash: echo $(PipelineLevelVariable)           
+          - bash: echo $(Build.BuildNumber)  
+          - bash: echo $(Build.BuildId)
+          - bash: echo $(Build.SourceBranchName)
+          - bash: echo $(Build.SourcesDirectory)
+          # Recursive list directory on Defalt Workign directory 
+          - bash: ls -R $(System.DefaultWorkingDirectory)
+          - bash: echo $(Build.ArtifactStagingDirectory)
+          - bash: java -version
+          - bash: node --version
+          - bash: python --version
+          - bash: mvn --version
+          - bash: ls -R $(Build.ArtifactStagingDirectory)
+# Use Task Assistant at the right hand side to search for copy files option. Place the cursor excalty where you want the script to be added          
+          - task: CopyFiles@2
+            inputs:
+              SourceFolder: '$(System.DefaultWorkingDirectory)'
+              Contents: |
+                **/*.yaml
+                **/*.yml
+                 **/*.tf
+              TargetFolder: '$(Build.ArtifactStagingDirectory)'
+          - bash: ls -R $(Build.ArtifactStagingDirectory)
+# Publish Artefact : Use thsi from Task assistant. We will need to publish artefact if we want to share something between stages.                    
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'drop'
+              publishLocation: 'Container'
