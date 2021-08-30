@@ -12,7 +12,7 @@ pipeline{
 		mavenHome  = tool 'myMaven' // This is the Maven name we have in the Jenkins UI console -> Manage Jenkins -> Global Tool Configuration
 		//PATH = "$dockerHome/bin:$PATH"
 		PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
-		dockerRegistry = "mailsonymathew/jenkins-currency-exchange-devops"  // we will use docker registry further down 
+		dockerRegistry = "mailsonymathew/currency-exchange-devops"  // we will use docker registry further down 
 		registryCredential = 'dockerHub' //dockerHub is the name of the Docker credentails we have provided in the Jenkins UI -> Manage Jenkins -> Manage Credentials 
 		dockerImage = ''
 	}
@@ -79,7 +79,7 @@ pipeline{
 // 		}
 // 		stage("Push Docker Image"){
 // 			steps{
-// 				// "docker push mailsonymathew/mailsonymathew/currency-exchange-devops:$env.BUILD_TAG"  -> This is an old method of doing this
+// 				// "docker push mailsonymathew/currency-exchange-devops:$env.BUILD_TAG"  -> This is an old method of doing this
 // 				script{
 // // 					docker.withRegistry('','dockerHub'){  // add a wrapper providing docker credentails . dockerHub is the name of the Docker credentails we have provided in the Jenkins UI -> Manage Jenkins -> Maanage Credentials 
 // // 						dockerImage.push();
