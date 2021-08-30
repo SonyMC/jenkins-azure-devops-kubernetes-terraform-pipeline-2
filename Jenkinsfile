@@ -63,7 +63,10 @@ pipeline{
             steps {
                 script {
 					 withCredentials([usernamePassword(credentialsId: 'GitHub', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                         sh('git push https://${GIT_PASSWORD}@github.com/SonyMC/jenkins-azure-devops-kubernetes-terraform-pipeline-2.git HEAD:master')
+			 sh('git config --global user.email "mailsonymathew@gmail.com"')
+			 sh('git config pull.rebase false')			 	
+			 sh('git pull https://${GIT_PASSWORD}@github.com/SonyMC/jenkins-azure-devops-kubernetes-terraform-pipeline-2.git HEAD:master')			 
+             sh('git push https://${GIT_PASSWORD}@github.com/SonyMC/jenkins-azure-devops-kubernetes-terraform-pipeline-2.git HEAD:master')
                     }
                 }
             }

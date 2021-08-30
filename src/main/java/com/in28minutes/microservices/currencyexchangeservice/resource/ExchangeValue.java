@@ -19,7 +19,7 @@ public class ExchangeValue {
 	private String to;
 
 	private BigDecimal conversionMultiple;
-	
+
 	private String exchangeEnvironmentInfo;
 
 	public ExchangeValue() {
@@ -55,7 +55,7 @@ public class ExchangeValue {
 	}
 
 	public void setExchangeEnvironmentInfo(String exchangeEnvironmentInfo) {
-		this.exchangeEnvironmentInfo = exchangeEnvironmentInfo+"updated";
+		this.exchangeEnvironmentInfo = exchangeEnvironmentInfo + "updated--yahoo!!!";
 	}
 
 	@Override
@@ -63,5 +63,5 @@ public class ExchangeValue {
 		return "ExchangeValue [id=" + id + ", from=" + from + ", to=" + to + ", conversionMultiple="
 				+ conversionMultiple + ", exchangeEnvironmentInfo=" + exchangeEnvironmentInfo + "]";
 	}
-	
+
 }
