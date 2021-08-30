@@ -63,7 +63,7 @@ pipeline{
             steps {
                 script {
 					 withCredentials([usernamePassword(credentialsId: 'GitHub', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                         sh('git push https://${GIT_PASSWORD}@https://github.com/SonyMC/jenkins-azure-devops-kubernetes-terraform-pipeline-2.git HEAD:master')
+                         sh('git push https://${GIT_PASSWORD}@github.com/SonyMC/jenkins-azure-devops-kubernetes-terraform-pipeline-2.git HEAD:master')
                     }
                 }
             }
