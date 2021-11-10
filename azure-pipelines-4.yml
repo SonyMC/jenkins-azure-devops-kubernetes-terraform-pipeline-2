@@ -1,34 +1,30 @@
-# Demo for stages and deployments
+# Docker
+# Build a Push Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
 
 stages:
 - stage: Build
+  displayName: Build & Push image
   jobs:
-  - job: BuildJob
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
     steps:
-    - bash: echo "Do the build"
-- stage: DevDeploy
-  jobs:
-  # Define deployment ,env ,strategy & deploy steps
-  - deployment: DevDeployJob
-  # Deploy to DEV environment
-    environment: Dev
-  # Strategy used is run all at once  
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - script: echo deploy to Dev
-- stage: QADeploy
-  jobs:
-  - deployment: QADeployJob
-    environment: QA
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - script: echo deploy to QA
+    - task: Docker@2
+      displayName: Build and Push Image
+      inputs:
+        containerRegistry: 'mailsonymathew-dockerHub'
+        repository: 'mailsonymathew/currency-exchange-devops'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: '$(tag)'
